@@ -57,3 +57,20 @@ strcat()：连接字符串
 strcmp()：比较字符串
 strchr()：查找字符
 strstr()：查找子字符串
+
+//<string>
+提供std::string类
+类方法：
+size() / length()
+c_str()：转换为C风格字符串
+append/compare/find/substr(提取)/erase
+
+//<ctime>
+时间函数
+
+
+
+//C++标准库容器(container)：容器（Container）是指一种可以存储多个元素的对象，通常通过提供一系列的操作来访问、修改和管理这些元素
+容器是类模板，序列容器：<vector><deque><list>，关联容器，容器适配器(前两种的变体)：queue，stack//由于容器适配器不支持迭代器，因此它们无法与 C++ 标准库算法一起使用。 有关详细信息，请参阅算法。
+//<iterator>
+iterator是指针的泛化，用于容器。范围为第一个元素到最后一个元素的下一个位置
