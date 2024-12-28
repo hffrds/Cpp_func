@@ -70,7 +70,25 @@ append/compare/find/substr(提取)/erase
 
 
 
-//C++标准库容器(container)：容器（Container）是指一种可以存储多个元素的对象，通常通过提供一系列的操作来访问、修改和管理这些元素
-容器是类模板，序列容器：<vector><deque><list>，关联容器，容器适配器(前两种的变体)：queue，stack//由于容器适配器不支持迭代器，因此它们无法与 C++ 标准库算法一起使用。 有关详细信息，请参阅算法。
+//C++标准库容器(container)：容器（Container）是指一种存储多个元素的动态管理的对象，底层通过分配器(allocator)管理内存
+容器是类模板，序列容器：<vector><deque><list>，关联容器，容器适配器(前两种的变体)：queue，stack//由于容器适配器只暴露部分接口，不支持迭代器，因此它们无法与 C++ 标准库算法一起使用。 有关详细信息，请参阅算法。
+
 //<iterator>
-iterator是指针的泛化，用于容器。范围为第一个元素到最后一个元素的下一个位置
+iterator是指针的泛化，用于容器(是访问容器元素的通用方法)。范围为第一个元素到最后一个元素的下一个位置：//string也可以使用迭代器
+std::vector<int> vec = {1, 2, 3, 4, 5};
+for (auto it = vec.begin(); it != vec.end(); ++it) {
+    std::cout << *it << " ";
+}
+++it移动迭代器
+vector支持随机访问，有operator[]成员函数//动态数组
+vec.insert(it, 10);          // 在位置it前插入元素10
+vec.erase(it);               // 删除位置it指向的元素
+std::advance(it, 2);  // 将迭代器移动两步
+//算法
+依赖于迭代器
+auto it = std::find(numbers.begin(), numbers.end(), 8); //未找到返回numbers.end()
+int count = std::count(numbers.begin(), numbers.end(), 3); //统计出现次数
+std::sort //默认升序排序
+std::binary_search //使用二分查找实现find()/判断是否在里面 
+std::count_if
+std::for_each
