@@ -92,3 +92,9 @@ std::sort //默认升序排序
 std::binary_search //使用二分查找实现find()/判断是否在里面 
 std::count_if
 std::for_each
+
+//<cstring>
+bool met[10]; // 初始化
+int arr[10];
+memset(met, 0, sizeof(met));
+memset(arr, 0, sizeof(arr));
