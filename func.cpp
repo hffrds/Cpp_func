@@ -71,7 +71,7 @@ append/compare/find/substr(提取)/erase
 
 
 //C++标准库容器(container)：容器（Container）是指一种存储多个元素的动态管理的对象，底层通过分配器(allocator)管理内存
-容器是类模板，序列容器：<vector><deque><list>，关联容器，容器适配器(前两种的变体)：queue，stack//由于容器适配器只暴露部分接口，不支持迭代器，因此它们无法与 C++ 标准库算法一起使用。 有关详细信息，请参阅算法。
+容器是类模板，序列容器：<vector><deque><list>，关联容器，容器适配器(前两种的变体)：queue，stack//由于容器适配器只暴露部分接口（实际上只有5/6个函数），不支持迭代器，因此它们无法与 C++ 标准库算法一起使用。 有关详细信息，请参阅算法。
 
 //<iterator>
 iterator是指针的泛化，用于容器(是访问容器元素的通用方法)。范围为第一个元素到最后一个元素的下一个位置：//string也可以使用迭代器
@@ -89,7 +89,7 @@ std::advance(it, 2);  // 将迭代器移动两步
 auto it = std::find(numbers.begin(), numbers.end(), 8); //未找到返回numbers.end()
 int count = std::count(numbers.begin(), numbers.end(), 3); //统计出现次数
 std::sort //默认升序排序
-std::binary_search //使用二分查找实现find()/判断是否在里面 
+std::binary_search //使用二分查找实现find()/判断是否在里面             即使不支持随机访问
 std::count_if
 std::for_each
 
@@ -98,3 +98,59 @@ bool met[10]; // 初始化
 int arr[10];
 memset(met, 0, sizeof(met));
 memset(arr, 0, sizeof(arr));
+
+//<utility>
+定义了std::swap()函数
+<algorithm>头文件也有swap()函数，不过是引用的<utility>的，对于容器如<string><vector>有成员函数<swap>，同时也包含了非成员函数swap()
+
+//<algorithm>
+auto it = std::find(v.begin(), v.end(), 3);   找到第一个等于 value 的元素，返回值为迭代器 未找到返回end()
+<string>有成员函数（vector无） std::string::find()，查找单个字符或子字符串，返回的是size_t的索引，未找到返回std::string::npos
+int count = std::count(v.begin(), v.end(), 2);
+std::binary_search() 适用于有序容器，返回类型为bool   使用二分查找进行查找(find()也能查找 线性查找)，时间复杂度O(log n)   查找子字符串还是要用find()
+可以先std::sort(v.begin(), v.end());升序排序 定义在<algorithm>
+
+                                #include <iostream>
+                                #include <vector>
+                                #include <algorithm>
+                                
+                                struct Person {
+                                    int id;
+                                    std::string name;
+                                };
+                                
+                                // 自定义比较器
+                                bool compareById(const Person& p1, const Person& p2) {
+                                    return p1.id < p2.id;
+                                }
+                                
+                                int main() {
+                                    std::vector<Person> people = {
+                                        {1, "Alice"},
+                                        {2, "Bob"},
+                                        {3, "Charlie"},
+                                    };
+                                
+                                    // 必须先排序
+                                    std::sort(people.begin(), people.end(), compareById);
+                                
+                                    // 查找 id 为 2 的人
+                                    Person target = {2, ""};
+                                    if (std::binary_search(people.begin(), people.end(), target, compareById)) {
+                                        std::cout << "Found person with ID 2!" << std::endl;
+                                    } else {
+                                        std::cout << "Person with ID 2 not found." << std::endl;
+                                    }
+                                
+                                    return 0;
+                                }
+std::reverse(v.begin(), v.end());反转
+std::replace(v.begin(), v.end(), 3, 99);替代所有的3为99
+std::fill(vec.begin(), vec.end(), 42);填充
+std::copy(source.begin(), source.end(), destination.begin());复制                     //返回值：std::copy() 会返回指向目标范围末尾元素的迭代器（即，复制操作后的下一个位置）？
+auto it = std::unique(vec.begin(), vec.end());移除相邻的相同元素放到末尾返回不重复元素的末尾的迭代器，需要先排序
+如之后直接vec.resize(std::distance(vec.begin(), it));（容器的成员函数，用于重新定义大小）
+
+
+均适用于普通数组，迭代器传指针即可
+std::begin(arr) 和 std::end(arr)适用于数组和容器 定义在<iterator> 
