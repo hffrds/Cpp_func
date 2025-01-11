@@ -154,3 +154,6 @@ auto it = std::unique(vec.begin(), vec.end());移除相邻的相同元素放到�
 
 均适用于普通数组，迭代器传指针即可
 std::begin(arr) 和 std::end(arr)适用于数组和容器 定义在<iterator> 
+
+<cstdint>
+定义intN_t和uintN_t
