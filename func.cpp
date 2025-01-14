@@ -38,6 +38,9 @@ modf()：将浮点数分解为整数部分和小数部分
 double int_part, frac_part;
 frac_part = modf(5.75, &int_part); // int_part = 5.0, frac_part = 0.75
 
+isinf()
+isnan()
+
 //<cstdio>--由<stdio.h>发展
 输入与输出
 
